@@ -44,7 +44,7 @@ function CardGroup(props){
     // Global State
     // const [showCard,setShowCard] = useGlobalState('show');
     // const handleShowCard = () => setShowCard(false);
-
+    let color,backgroundColor;
     return <div>
             <Card className={classes.root}>
                 <Grid container>
@@ -122,7 +122,13 @@ function CardGroup(props){
                             name : props.card.name ? props.card.name : "" ,
                             status : false,
                             show : true,
-                            form : false,
+                            form : true,
+                            style : {
+                                width : "800px",
+                                height : "500px",
+                                marginTop : "40px",
+                                marginLeft: "-107px",
+                            }
                         })}>
                             <ChevronLeftIcon />
                         </IconButton>

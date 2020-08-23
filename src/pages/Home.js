@@ -120,11 +120,12 @@ export default function Home(){
                     {
                         card.show ? <Cards card = {card} data={data} /> :
                             <Card style={{
-                                marginTop: "80px",
+                                marginTop: "90px",
                                 marginLeft: "-107px",
                                 alignItems : "center",
                                 justify:"center",
-                                height: "50%"
+                                height: "200px",
+                                width : "521px"
                             }}><CardContent>
                                 <Typography style={{
                                     textAlign: "center"

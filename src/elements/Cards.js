@@ -6,6 +6,7 @@ import {Grid} from "@material-ui/core";
 
 export default function Cards(props){
     let color,backgroundColor,text;
+    let style = {};
     switch (props.card.name){
         case "A" :
             backgroundColor="#e67e22";
@@ -54,15 +55,26 @@ export default function Cards(props){
             </Typography></>;
             break;
     }
+    if(props.card.style !== undefined){
+        style = props.card.style;
+        if(style.color === undefined && style.backgroundColor === undefined){
+            style["color"] = color;
+            style["backgroundColor"] = backgroundColor;
+        }
+    }
     // const classes = useStyles();
     return <div>
-        <Card style={{
-            marginTop : "80px",
-            marginLeft: "-107px",
-            height : "50%",
-            color:color,
-            backgroundColor : backgroundColor
-        }}>
+        <Card style={
+           props.card.style ?
+               style : {
+                marginTop : "80px",
+                marginLeft: "-107px",
+                height: "200px",
+                width : "521px",
+                color:color,
+                backgroundColor : backgroundColor
+            }
+        }>
             <CardContent>
                 <Grid rows="1" columns="2" container>
                     <Typography variant = "h4" component="h4">
