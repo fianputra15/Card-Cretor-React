@@ -1,4 +1,4 @@
-import React, {useState,useImperativeHandle, useRef, forwardRef} from "react";
+import React from "react";
 import CardContent from "@material-ui/core/CardContent";
 import {Grid} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
@@ -8,10 +8,12 @@ import Fab from "@material-ui/core/Fab";
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import IconButton from '@material-ui/core/IconButton';
 import AddIcon from "@material-ui/icons/Add";
-import { createGlobalState } from 'react-hooks-global-state';
+// import { createGlobalState } from 'react-hooks-global-state';
 
-const show = { show: false };
-const { useGlobalState } = createGlobalState(show);
+
+//Init Global State
+// const show = { show: false };
+// const { useGlobalState } = createGlobalState(show);
 
 const useStyles = makeStyles({
     root: {
@@ -39,8 +41,9 @@ const useStyles = makeStyles({
 
 function CardGroup(props){
     const classes = useStyles();
-    const [showCard,setShowCard] = useGlobalState('show');
-    const handleShowCard = () => setShowCard(false);
+    // Global State
+    // const [showCard,setShowCard] = useGlobalState('show');
+    // const handleShowCard = () => setShowCard(false);
 
     return <div>
             <Card className={classes.root}>
@@ -50,9 +53,11 @@ function CardGroup(props){
                             backgroundColor:"#e67e22",
                             minWidth:"50px",
                             color:"white"
-                        }}  onClick={props.setNameCard.bind(this,{
+                        }}  onClick={props.setCard.bind(this,{
                             name : "A",
-                            status : true
+                            status : true,
+                            show : true,
+                            form : true
                         })}>
                             <CardContent>
                                 <Typography variant = "h4" component="h4">
@@ -64,9 +69,11 @@ function CardGroup(props){
                             backgroundColor:"#c0392b",
                             minWidth:"50px",
                             color:"white"
-                        }} onClick={props.setNameCard.bind(this,{
+                        }} onClick={props.setCard.bind(this,{
                             name : "B",
-                            status : true
+                            status : true,
+                            show : true,
+                            form : true
                         })}>
                             <CardContent>
                                 <Typography variant = "h4" component="h4">
@@ -78,9 +85,11 @@ function CardGroup(props){
                             backgroundColor:"#9b59b6",
                             minWidth:"50px",
                             color:"white"
-                        }}  onClick={props.setNameCard.bind(this,{
+                        }}  onClick={props.setCard.bind(this,{
                             name : "C",
-                            status : true
+                            status : true,
+                            show : true,
+                            form : true
                         })}>
                             <CardContent>
                                 <Typography variant = "h4" component="h4">
@@ -93,9 +102,11 @@ function CardGroup(props){
                             backgroundColor:"#34495e",
                             minWidth:"50px",
                             color:"white"
-                        }}  onClick={props.setNameCard.bind(this,{
+                        }}  onClick={props.setCard.bind(this,{
                             name : "D",
-                            status : true
+                            status : true,
+                            show : true,
+                            form : true
                         })}>
                             <CardContent>
                                 <Typography variant = "h4" component="h4">
@@ -107,7 +118,12 @@ function CardGroup(props){
                     <Grid item xs={2}>
                         <IconButton style={{
                             marginTop:"10.8rem"
-                        }} onClick={handleShowCard}>
+                        }} onClick={props.setCard.bind(this,{
+                            name : props.card.name ? props.card.name : "" ,
+                            status : false,
+                            show : true,
+                            form : false,
+                        })}>
                             <ChevronLeftIcon />
                         </IconButton>
                     </Grid>
@@ -117,11 +133,16 @@ function CardGroup(props){
 }
 
 export default function FloatingButton(props){
-    const [showCard,setShowCard] = useGlobalState('show');
-    const handleShowCard = () => setShowCard(true);
+    // Global State
+    // const [showCard,setShowCard] = useGlobalState('show');
+    // const handleShowCard = () => setShowCard(true);
     return <div >
         {
-            showCard ? <CardGroup {...props} /> : <Fab onClick={handleShowCard} color="primary" aria-label="add">
+            props.card.status ? <CardGroup {...props} /> : <Fab onClick={props.setCard.bind(this,{
+                status : true,
+                show : false,
+                form : false
+            })} color="primary" aria-label="add">
                 <AddIcon />
             </Fab>
         }
