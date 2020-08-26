@@ -10,45 +10,36 @@ import TextField from '@material-ui/core/TextField';
 import CardGroup from "../parts/CardGroup";
 import CardContent from "@material-ui/core/CardContent";
 
-// const useStyles = makeStyles(theme => ({
-//     appBar: {
-//         boxShadow: '0 1px 8px rgba(0,0,0,.3)',
-//         position: 'relative',
-//         zIndex: theme.zIndex.drawer + 100,
-//         [theme.breakpoints.down('sm')]: {
-//             position: 'fixed'
-//         }
-//     },
-//     toolBar: {
-//         paddingLeft: theme.spacing(1) / 2,
-//         paddingRight: theme.spacing(1) / 2
-//     },
-//     branding: {
-//         display: 'flex',
-//         overflow: 'hidden',
-//         textOverflow: 'ellipsis',
-//         whiteSpace: 'nowrap',
-//         margin: 'auto 0',
-//         marginLeft : 8,
-//         lineHeight: '50px',
-//         padding: `0 64px 0 0`
-//     },
-//     logo: {
-//         margin: 'auto',
-//         [theme.breakpoints.down('sm')]: {
-//             maxWidth: '80px'
-//         }
-//     },
-//     searchWrapper: {
-//         flex: '1 1 0%',
-//         boxSizing: ' border-box'
-//     },
-// }));
 export default function Home(){
+    //State For Selection Card and show/hidden form & Card
     let [card,setCard] = useState({});
+    // State For Collect Value From Form
     let [data,setData] = useState({});
-    // let form,data = {};
     let form;
+
+    // Function for drag in CardGroup
+    const ondrag = (e) => {
+        e.dataTransfer.setData("name",e.target.id);
+    };
+
+    // Function for drag over in Cards Components
+    const ondragover = (e) => {
+        e.preventDefault();
+    };
+
+    // Function for on drop in Cards Components
+    const ondrop = (e) => {
+        e.preventDefault();
+        let data = e.dataTransfer.getData("name");
+        setCard({
+            name : data,
+            status : true,
+            show : true,
+            form : true
+        })
+    };
+
+    // Function OnChange from form
     const handleChange = () => {
         switch (card.name){
             case "A" : setData({
@@ -60,7 +51,8 @@ export default function Home(){
             case "B" : setData({
                 name : document.querySelector("#name").value,
                 company : document.querySelector("#company").value,
-                role : document.querySelector("#role").value
+                role : document.querySelector("#role").value,
+                phone : document.querySelector("#phone").value
             });
                 break;
             case "C" : setData({
@@ -75,6 +67,8 @@ export default function Home(){
                 break;
         }
     }
+
+    // Selection and fill form with textfield
     switch (card.name){
         case "A" :
             form = <>
@@ -88,6 +82,7 @@ export default function Home(){
                 <TextField id="name" label="Name" onChange={handleChange}  variant="outlined" /><br/><br/>
                 <TextField id="company" label="Company" onChange={handleChange} variant="outlined" /><br/><br/>
                 <TextField id="role" label="Role" onChange={handleChange} variant="outlined" /><br/><br/>
+                <TextField id="phone" label="Phone Number" onChange={handleChange} variant="outlined" /><br/><br/>
             </>;
             break;
         case "C" :
@@ -112,26 +107,14 @@ export default function Home(){
                 <Grid item xs>
                     <Box color="text.primary" width={100}>
                         <br/>
-                        <CardGroup setCard = {setCard} card={card} />
+                        <CardGroup drag={ondrag}  setCard = {setCard} card={card} />
                         {/*<button onClick={() => alert(nameCard.name)}>coba</button>*/}
                     </Box>
                 </Grid>
                 <Grid item xs >
                     {
-                        card.show ? <Cards card = {card} data={data} /> :
-                            <Card style={{
-                                marginTop: "90px",
-                                marginLeft: "-107px",
-                                alignItems : "center",
-                                justify:"center",
-                                height: "200px",
-                                width : "521px"
-                            }}><CardContent>
-                                <Typography style={{
-                                    textAlign: "center"
-                                }} variant="h5" component="h5">Choose Template</Typography>
-                            </CardContent>
-                            </Card>
+                        card.show ? <Cards drop={ondrop}  dragover={ondragover} card = {card} data={data} /> :
+                            <Cards drop={ondrop} dragover={ondragover} class="droptarget" card={{name : "Choose"}} />
                     }
                 </Grid>
                 <Grid item xs >

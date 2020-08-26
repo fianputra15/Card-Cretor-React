@@ -5,8 +5,10 @@ import Typography from '@material-ui/core/Typography';
 import {Grid} from "@material-ui/core";
 
 export default function Cards(props){
-    let color,backgroundColor,text;
+    let color,backgroundColor,text,heightCard="";
     let style = {};
+
+    // Selection Card Style
     switch (props.card.name){
         case "A" :
             backgroundColor="#e67e22";
@@ -24,14 +26,18 @@ export default function Cards(props){
         case "B" :
             backgroundColor="#c0392b";
             color="white";
+            heightCard="230px";
             text = <><Typography variant = "h5" component="h5">
                 Name : {props.data.name ? props.data.name : "Your name"}
-            </Typography>
+                 </Typography>
                 <Typography variant = "h5" component="h5">
                     Company : {props.data.company ? props.data.company : "Your Company"}
                 </Typography>
                 <Typography variant = "h5" component="h5">
                     Role  : {props.data.role ? props.data.role : "Your Role"}
+                </Typography>
+                <Typography variant = "h5" component="h5">
+                    Phone Number  : {props.data.phone ? props.data.phone : "Your Phone Number"}
                 </Typography></>;
             break;
         case "C" :
@@ -55,6 +61,8 @@ export default function Cards(props){
             </Typography></>;
             break;
     }
+
+    // Add Style For Cards when user not choose template
     if(props.card.style !== undefined){
         style = props.card.style;
         if(style.color === undefined && style.backgroundColor === undefined){
@@ -67,18 +75,18 @@ export default function Cards(props){
         <Card style={
            props.card.style ?
                style : {
-                marginTop : "80px",
-                marginLeft: "-107px",
-                height: "200px",
+                marginTop : "90px",
+                marginLeft: "-110px",
+                height: heightCard === "" ?  "200px" : heightCard,
                 width : "521px",
                 color:color,
                 backgroundColor : backgroundColor
             }
-        }>
+        } onDrop={props.drop.bind(this)} onDragOver={props.dragover.bind(this)}>
             <CardContent>
                 <Grid rows="1" columns="2" container>
                     <Typography variant = "h4" component="h4">
-                        {props.card.name === "" ? "Choose Template"  :  `Card ${props.card.name}`}
+                        {props.card.name === "" || props.card.name === "Choose" ? "Choose Template"  :  `Card ${props.card.name}`}
                     </Typography>
                     <Grid item xs={12} style = {{
                         padding:"10px",

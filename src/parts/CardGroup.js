@@ -8,6 +8,8 @@ import Fab from "@material-ui/core/Fab";
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import IconButton from '@material-ui/core/IconButton';
 import AddIcon from "@material-ui/icons/Add";
+import {Droppable, Draggable} from 'react-beautiful-dnd';
+
 // import { createGlobalState } from 'react-hooks-global-state';
 
 
@@ -45,31 +47,34 @@ function CardGroup(props){
     // const [showCard,setShowCard] = useGlobalState('show');
     // const handleShowCard = () => setShowCard(false);
     let color,backgroundColor;
+
     return <div>
             <Card className={classes.root}>
                 <Grid container>
                     <Grid item xs={10}>
-                        <Card style={{
+                        <Card id ="A" style={{
                             backgroundColor:"#e67e22",
                             minWidth:"50px",
-                            color:"white"
-                        }}  onClick={props.setCard.bind(this,{
+                            color:"white",
+
+                        }} draggable="true" onDragStart={props.drag.bind(this)} onClick={props.setCard.bind(this,{
                             name : "A",
                             status : true,
                             show : true,
                             form : true
                         })}>
+
                             <CardContent>
                                 <Typography variant = "h4" component="h4">
                                     Card A
                                 </Typography>
                             </CardContent>
                         </Card><br/>
-                        <Card style={{
+                        <Card id ="B" style={{
                             backgroundColor:"#c0392b",
                             minWidth:"50px",
                             color:"white"
-                        }} onClick={props.setCard.bind(this,{
+                        }}  draggable="true" onDragStart={props.drag.bind(this)} onClick={props.setCard.bind(this,{
                             name : "B",
                             status : true,
                             show : true,
@@ -81,11 +86,11 @@ function CardGroup(props){
                                 </Typography>
                             </CardContent>
                         </Card><br/>
-                        <Card style={{
+                        <Card id ="C" style={{
                             backgroundColor:"#9b59b6",
                             minWidth:"50px",
                             color:"white"
-                        }}  onClick={props.setCard.bind(this,{
+                        }}   draggable="true" onDragStart={props.drag.bind(this)} onClick={props.setCard.bind(this,{
                             name : "C",
                             status : true,
                             show : true,
@@ -95,14 +100,13 @@ function CardGroup(props){
                                 <Typography variant = "h4" component="h4">
                                     Card C
                                 </Typography>
-
                             </CardContent>
                         </Card><br/>
-                        <Card style={{
+                        <Card id ="D" style={{
                             backgroundColor:"#34495e",
                             minWidth:"50px",
                             color:"white"
-                        }}  onClick={props.setCard.bind(this,{
+                        }}   draggable="true" onDragStart={props.drag.bind(this)} onClick={props.setCard.bind(this,{
                             name : "D",
                             status : true,
                             show : true,
@@ -122,7 +126,7 @@ function CardGroup(props){
                             name : props.card.name ? props.card.name : "" ,
                             status : false,
                             show : true,
-                            form : true,
+                            form : props.card.name ? true : false,
                             style : {
                                 width : "800px",
                                 height : "500px",
